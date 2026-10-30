@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" width="240" height="300">
+  <defs>
+    <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.2" fill="#f6e7c8" fill-opacity=".55"/></pattern>
+    <pattern id="dia" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M7 0 L14 7 L7 14 L0 7Z" fill="none" stroke="#f6e7c8" stroke-opacity=".5" stroke-width="1"/></pattern>
+    <path id="frame" d="M0 120 V50 C0 28 24 18 36 0 C48 18 72 28 72 50 V120Z"/>
+    <path id="inner" d="M8 120V52C8 36 26 28 36 12C46 28 64 36 64 52V120Z"/>
+    <g id="arch"><use href="#frame" fill="#f2dcae" stroke="#b98a3e" stroke-width="2"/></g>
+  </defs>
+  <rect width="240" height="300" fill="#8e2417"/>
+  <rect width="240" height="300" fill="url(#dia)"/>
+  <g transform="translate(8,10)"><use href="#arch"/><use href="#inner" fill="#7b1a5a"/><use href="#inner" fill="url(#dots)"/></g>
+  <g transform="translate(92,40)"><use href="#arch"/><use href="#inner" fill="#0f6b66"/><use href="#inner" fill="url(#dots)"/></g>
+  <g transform="translate(168,6)"><use href="#arch"/><use href="#inner" fill="#6c7a1e"/><use href="#inner" fill="url(#dots)"/></g>
+  <g transform="translate(16,160)"><use href="#arch"/><use href="#inner" fill="#b8231c"/><use href="#inner" fill="url(#dots)"/></g>
+  <g transform="translate(100,176)"><use href="#arch"/><use href="#inner" fill="#e0a52a"/><use href="#inner" fill="url(#dots)"/></g>
+  <g transform="translate(168,168)"><use href="#arch"/><use href="#inner" fill="#7b1a5a"/><use href="#inner" fill="url(#dots)"/></g>
+</svg>
