@@ -136,10 +136,11 @@ html.playing:not(.p-id) .poster { opacity: 0; transform: translateX(-50%) transl
   letter-spacing: -.045em; text-transform: uppercase; color: var(--sun);
   text-shadow: 3px 0 0 rgba(0,170,200,.5), -3px 0 0 rgba(255,60,120,.45), 0 5px 0 var(--ink);
 }
-.name.name-hi { font: 400 clamp(34px, calc(var(--pw) * .145), 130px)/1.15 var(--hindi); letter-spacing: 0; text-transform: none; bottom: 2%; }
+.name.name-hi { font: 400 clamp(34px, calc(var(--pw) * .145), 130px)/1.15 var(--hindi); letter-spacing: 0; text-transform: none; bottom: 2%;
+  -webkit-text-stroke: .09em var(--ink); paint-order: stroke fill; }
 
-.caps { position: absolute; z-index: 4; left: 5%; top: 38%; display: grid; gap: .7rem; max-width: 13ch; }
-.caps li { position: relative; padding-left: 1.2em; font: 600 clamp(10px, .95vw, 13px)/1.3 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--cream); }
+.caps { position: absolute; z-index: 4; left: 3%; top: 38%; display: grid; gap: .7rem; max-width: 10ch; }
+.caps li { position: relative; padding-left: 1.2em; font: 600 clamp(10px, .85vw, 12px)/1.3 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--cream); }
 .caps li::before { content: ""; position: absolute; left: 0; top: .25em; width: .7em; height: .7em; border-radius: 50%; background: var(--sun); }
 
 .sticker {
@@ -150,8 +151,8 @@ html.playing:not(.p-id) .poster { opacity: 0; transform: translateX(-50%) transl
 }
 a.sticker:hover { background: var(--cream); transform: rotate(0) translateY(-2px); }
 .s1 { left: -8%; bottom: 17%; transform: rotate(-5deg); }
-.s2 { right: -8%; top: 28%; transform: rotate(4deg); background: var(--cream); }
-.s3 { right: -4%; top: 38%; transform: rotate(-3deg); }
+.s2 { right: -10%; top: 10%; transform: rotate(4deg); background: var(--cream); }
+.s3 { right: -6%; top: 19%; transform: rotate(-3deg); }
 html.playing:not(.p-id) .figure { opacity: 0; }
 .figure { transition: opacity 1s ease .3s; }
 
