@@ -15,6 +15,12 @@ const LETTERS: Array<{ ch: string; d: string; r: string; y: string }> = [
   { ch: 'O', d: '1.28s', r: '-2deg', y: '3px' },
 ];
 
+/** Words for the big background rows. Each row drifts in the opposite direction. */
+const BIGWORDS: Array<{ text: string; lang?: string }> = [
+  { text: 'PORTFOLIO — 2026 — PORTFOLIO — 2026 — ' },
+  { text: site.nameHindi ? `${site.nameHindi} · ${site.nameHindi} · ${site.nameHindi} · ` : 'PRAPTEE MILLER · PRAPTEE MILLER · ', lang: site.nameHindi ? 'hi' : undefined },
+];
+
 const style = (vars: Record<string, string>) => vars as CSSProperties;
 
 export default function Hero() {
@@ -29,6 +35,17 @@ export default function Hero() {
       <div className="under">
         <div className="carpet" aria-hidden="true" />
 
+        {/* Huge outlined words drifting behind the poster. Edit BIGWORDS below to change them. */}
+        <div className="bigtype" aria-hidden="true">
+          {BIGWORDS.map((row, i) => (
+            <div key={i} className={`bigrow r${i}`} lang={row.lang}>
+              <div className="track">
+                <span>{row.text}</span>
+                <span>{row.text}</span>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="poster">
           <div className="poster-bg" aria-hidden="true" />
 
