@@ -91,7 +91,7 @@ html.playing:not(.p-id) .nav { opacity: 0; transform: translateY(-100%); visibil
   --ph: calc(100svh - 56px - 11svh);               /* poster height */
   --pw: min(62vw, calc(var(--ph) * .92));          /* poster width */
   position: relative; height: 100svh; min-height: 560px;
-  overflow: hidden; background: #7a1f16; isolation: isolate;
+  overflow: hidden; background: #7a1f16; isolation: isolate; z-index: 0;
 }
 
 .skip-intro {
@@ -118,13 +118,42 @@ html.playing:not(.p-id) .poster { opacity: 0; transform: translateX(-50%) transl
 .poster-bg { position: absolute; inset: 0; background: url('/assets/paper.jpg') center / cover; box-shadow: inset 0 0 110px rgba(110,20,0,.4); }
 
 .figure {
-  position: absolute; z-index: 3; left: 50%; bottom: 0; height: calc(100% + 6svh); aspect-ratio: 3 / 4; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: 0; height: calc(100% + 6svh); aspect-ratio: 3 / 4; transform: translateX(-50%);
   filter:
     drop-shadow(5px 0 0 var(--sun)) drop-shadow(-5px 0 0 var(--sun)) drop-shadow(0 -5px 0 var(--sun))
     drop-shadow(4px 4px 0 var(--sun)) drop-shadow(-4px -4px 0 var(--sun)) drop-shadow(4px -4px 0 var(--sun)) drop-shadow(-4px 4px 0 var(--sun))
     drop-shadow(14px 18px 18px rgba(30,5,0,.45));
 }
 .figure img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+
+/* 3D orbit: things circle the figure, passing in front of and behind her */
+.stage3d { position: absolute; inset: 0; z-index: 3; perspective: 1800px; pointer-events: none; }
+.space { position: absolute; inset: 0; transform-style: preserve-3d; }
+.orbit {
+  --R: calc(var(--pw) * .6); --tilt: calc(-13deg - var(--py, 0) * 7deg);
+  position: absolute; left: 50%; top: 46%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(var(--tilt));
+}
+.ring { position: absolute; inset: 0; transform-style: preserve-3d; animation: spin 26s linear infinite; }
+.orb { position: absolute; left: 0; top: calc(var(--y) * var(--ph)); width: 0; height: 0; transform-style: preserve-3d; transform: rotateY(var(--a)) translateZ(var(--R)); }
+.face { --d: calc(var(--s) * var(--k, 1)); position: absolute; left: calc(var(--d) / -2); top: calc(var(--d) / -2); width: var(--d); height: var(--d); transform-style: preserve-3d; animation: unspin 26s linear infinite; }
+.face:not(.fact) img, .face:not(.fact) svg { display: block; width: 100%; height: 100%; object-fit: contain; overflow: visible;
+  filter: drop-shadow(2px 0 0 #f6e7c8) drop-shadow(-2px 0 0 #f6e7c8) drop-shadow(0 2px 0 #f6e7c8) drop-shadow(0 -2px 0 #f6e7c8) drop-shadow(3px 6px 5px rgba(20,4,0,.5));
+  transition: opacity 1s ease .5s; }
+@keyframes spin { to { transform: rotateY(360deg); } }
+@keyframes unspin {
+  from { transform: rotateY(calc(var(--a) * -1)) rotateX(calc(var(--tilt) * -1)); }
+  to   { transform: rotateY(calc(var(--a) * -1 - 360deg)) rotateX(calc(var(--tilt) * -1)); }
+}
+html.playing:not(.p-id) .face { opacity: 0; }
+.face { transition: opacity 1s ease .5s; }
+.face.fact {
+  --d: 0px; left: 0; top: 0; width: max-content; height: auto; max-width: 190px; translate: -50% -50%;
+  padding: .6em .95em .7em; border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+  font: 800 clamp(12px, 1.05vw, 15px)/1.15 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--sun);
+}
+.face.fact small { display: block; margin-bottom: .3em; font: 500 .68em/1 var(--mono); letter-spacing: .16em; opacity: .75; }
+.face.f1 { background: var(--cream); }
+.face.f2 { background: var(--teal); color: var(--cream); }
 
 .name {
   position: absolute; z-index: 5; left: 0; right: 0; bottom: 3.5%; margin: 0; text-align: center; white-space: nowrap; pointer-events: none;
@@ -427,6 +456,8 @@ html.js .label.reveal.in { transform: rotate(-2deg); }
   .hero { --ph: calc(100svh - 56px - 8svh); --pw: calc(100vw - 44px); }
   .poster { top: calc(56px + 3svh); }
   .figure { height: 80%; }
+  .orbit { --R: calc(var(--pw) * .3); top: 50%; }
+  .face.fact { font-size: 10.5px; max-width: 130px; }
   .name { font-size: clamp(30px, calc(var(--pw) * .94 / (var(--len, 9) * .62)), 90px); }
   .caps { top: 5%; left: 6%; gap: .4rem; }
   .caps li { font-size: 10px; }

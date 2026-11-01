@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
-import { site } from '@/data/site';
+import { about, site } from '@/data/site';
 
 /** One entry per letter: animation delay, rotation and baseline wobble give the hand-cut feel. */
 const LETTERS: Array<{ ch: string; d: string; r: string; y: string }> = [
@@ -13,6 +13,20 @@ const LETTERS: Array<{ ch: string; d: string; r: string; y: string }> = [
   { ch: 'L', d: '.96s', r: '-3deg', y: '2px' },
   { ch: 'I', d: '1.12s', r: '1deg', y: '-2px' },
   { ch: 'O', d: '1.28s', r: '-2deg', y: '3px' },
+];
+
+/**
+ * Facts that circle the figure in 3D. They come from the About data in src/data/site.ts,
+ * so editing `interestedIn` and `openTo` there changes what orbits. Only true things belong there.
+ */
+const split = (v: string) => v.split('·').map((x) => x.trim()).filter(Boolean);
+const FACTS: Array<{ label: string; text: string }> = [
+  ...split(about.interestedIn).map((text) => ({ label: 'Into', text })),
+  ...split(about.openTo).map((text) => ({ label: 'Open to', text })),
+];
+/** Position of each card on the ring: start angle (deg) and height as a fraction of the poster. */
+const SLOTS: Array<{ a: number; y: number }> = [
+  { a: 0, y: -0.3 }, { a: 60, y: 0.05 }, { a: 120, y: -0.12 }, { a: 180, y: 0.3 }, { a: 240, y: -0.27 }, { a: 300, y: 0.2 },
 ];
 
 const style = (vars: Record<string, string>) => vars as CSSProperties;
@@ -39,6 +53,8 @@ export default function Hero() {
           </ul>
 
           {/* To change the picture, replace /public/assets/hero-illustration.webp (transparent background, 3:4). */}
+          <div className="stage3d">
+            <div className="space">
           <div className="figure">
             <Image
               src="/assets/hero-illustration.webp"
@@ -48,6 +64,20 @@ export default function Hero() {
               sizes="(max-width: 760px) 70vw, 46vw"
               priority
             />
+          </div>
+              <div className="orbit" aria-hidden="true">
+                <div className="ring">
+                  {FACTS.slice(0, SLOTS.length).map((f, i) => (
+                    <div key={i} className="orb" style={style({ '--a': `${SLOTS[i].a}deg`, '--y': String(SLOTS[i].y) })}>
+                      <div className={`face fact f${i % 3}`}>
+                        <small>{f.label}</small>
+                        {f.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           <h1 className="name" id="name">
