@@ -14,13 +14,17 @@ import { useEffect } from 'react';
 
 const SEEN_KEY = 'portfolio-intro-seen-v1';
 const STEPS: Array<[string, number]> = [
-  ['p-write', 300],
-  ['p-tear', 2700],
-  ['p-reveal', 3500],
-  ['p-id', 4300],
+  ['p-write', 300],   // the title is slapped onto the red paper
+  ['p-tear', 2200],   // the paper tears open and the carpet appears
+  ['p-reveal', 2900],
+  ['p-poster', 3700], // collage pieces snap on one after another
+  ['p-figure', 4100],
+  ['p-name', 4450],
+  ['p-stk', 4750],
+  ['p-id', 5200],     // navigation arrives
 ];
 const END_MS = 5800;
-const ALL = ['playing', 'p-write', 'p-tear', 'p-reveal', 'p-id'];
+const ALL = ['playing', 'p-write', 'p-tear', 'p-reveal', 'p-poster', 'p-figure', 'p-name', 'p-stk', 'p-id'];
 
 /** Seeded random so the tear is identical on every load. */
 function mulberry32(seed: number) {
