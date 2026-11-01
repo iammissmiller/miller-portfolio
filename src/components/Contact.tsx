@@ -20,7 +20,7 @@ export default function Contact() {
       </div>
       <div className="wrap">
         <p className="label reveal">
-          <span>05</span> / Contact
+          <span>05</span> / Contact <i lang="hi">संपर्क</i>
         </p>
         <h2 id="contact-h" className="contact-h reveal">
           Let&apos;s make

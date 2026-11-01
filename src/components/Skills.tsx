@@ -6,7 +6,7 @@ export default function Skills() {
       <div className="wrap">
         <div className="grid head">
           <p className="label reveal">
-            <span>03</span> / Skills
+            <span>03</span> / Skills <i lang="hi">हुनर</i>
           </p>
           <h2 id="skills-h" className="h-display reveal">
             What I work with.

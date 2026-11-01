@@ -6,8 +6,9 @@
  */
 
 export const site = {
-  name: 'Your Name', // TODO: confirm the name to show
-  initials: 'YN',
+  name: 'Praptee Miller',
+  nameHindi: 'प्राप्ति मिलर' as string | undefined, // Devanagari spelling: please confirm. Set to undefined to hide.
+  initials: 'PM',
   year: '2026',
   eyebrow: 'Computer science student · Developer · Design-minded',
   tagline: 'Golden hour, in code.',

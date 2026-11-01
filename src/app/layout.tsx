@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Bricolage_Grotesque, DM_Mono, Manrope } from 'next/font/google';
+import { Bricolage_Grotesque, DM_Mono, Manrope, Rozha_One } from 'next/font/google';
 import { site } from '@/data/site';
 import './globals.css';
 
-// Display: Bricolage Grotesque, heavy (name and headings). Body: Manrope. Labels: DM Mono.
+// Display: Bricolage Grotesque, heavy (name and headings). Hindi: Rozha One. Body: Manrope. Labels: DM Mono.
 const display = Bricolage_Grotesque({ weight: ['700', '800'], subsets: ['latin'], variable: '--font-display', display: 'swap' });
+const hindi = Rozha_One({ weight: '400', subsets: ['latin', 'devanagari'], variable: '--font-hindi', display: 'swap' });
 const body = Manrope({ subsets: ['latin'], variable: '--font-body', display: 'swap' });
 const mono = DM_Mono({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
@@ -51,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      className={`${display.variable} ${hindi.variable} ${body.variable} ${mono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: introScript }} />

@@ -5,7 +5,7 @@ export default function About() {
     <section className="section about" id="about" aria-labelledby="about-h">
       <div className="wrap grid">
         <p className="label reveal">
-          <span>01</span> / About
+          <span>01</span> / About <i lang="hi">परिचय</i>
         </p>
         <div className="about-body reveal">
           <h2 id="about-h" className="h-display">

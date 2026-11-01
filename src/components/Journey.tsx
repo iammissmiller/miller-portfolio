@@ -6,7 +6,7 @@ export default function Journey() {
       <div className="wrap">
         <div className="grid head">
           <p className="label reveal">
-            <span>04</span> / Journey
+            <span>04</span> / Journey <i lang="hi">सफ़र</i>
           </p>
           <h2 id="journey-h" className="h-display reveal">
             Hackathons, contributions &amp; more.

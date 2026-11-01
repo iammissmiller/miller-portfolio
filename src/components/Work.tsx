@@ -88,7 +88,7 @@ export default function Work() {
       <div className="wrap">
         <div className="grid head">
           <p className="label reveal">
-            <span>02</span> / Selected work
+            <span>02</span> / Selected work <i lang="hi">काम</i>
           </p>
           <h2 id="work-h" className="h-display reveal">
             Things I&apos;ve built.
