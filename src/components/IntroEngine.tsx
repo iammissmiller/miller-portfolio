@@ -4,29 +4,28 @@ import { useEffect } from 'react';
 
 /**
  * Behaviour layer. Renders nothing. It:
- *  1. builds the torn-paper edge (one jagged line shared by both paper halves)
+ *  1. builds the torn divider under the hero
  *  2. runs the opening sequence by adding classes to <html>; the CSS does the animating
  *  3. handles Skip, Esc, Replay, first-visit-only and reduced motion
- *  4. reveals sections on scroll and dims the golden-hour light as you scroll down
+ *  4. reveals sections as you scroll
  *
  * The page content is plain server-rendered HTML, so everything still works without this.
  */
 
 const SEEN_KEY = 'portfolio-intro-seen-v1';
 const STEPS: Array<[string, number]> = [
-  ['p-write', 300],   // the title is slapped onto the red paper
-  ['p-tear', 2200],   // the paper tears open and the carpet appears
-  ['p-reveal', 2900],
-  ['p-poster', 3700], // collage pieces snap on one after another
-  ['p-figure', 4100],
-  ['p-name', 4450],
-  ['p-stk', 4750],
-  ['p-id', 5200],     // navigation arrives
+  ['p-hit', 200],     // stickers slap onto the carpet one after another
+  ['p-clear', 3300],  // they burst away
+  ['p-poster', 3800], // the collage is pasted together piece by piece
+  ['p-figure', 4350],
+  ['p-name', 4850],
+  ['p-stk', 5300],
+  ['p-id', 5900],     // navigation arrives
 ];
-const END_MS = 5800;
-const ALL = ['playing', 'p-write', 'p-tear', 'p-reveal', 'p-poster', 'p-figure', 'p-name', 'p-stk', 'p-id'];
+const END_MS = 6600;
+const ALL = ['playing', 'p-hit', 'p-clear', 'p-poster', 'p-figure', 'p-name', 'p-stk', 'p-id'];
 
-/** Seeded random so the tear is identical on every load. */
+/** Seeded random so the torn divider is identical on every load. */
 function mulberry32(seed: number) {
   let a = seed;
   return function () {
@@ -39,35 +38,6 @@ function mulberry32(seed: number) {
 }
 
 const pct = (n: number) => `${n.toFixed(2)}%`;
-
-function buildTear(hero: HTMLElement) {
-  const rnd = mulberry32(2026);
-  const n = 44;
-  const base = 58;
-  let y = base;
-  const edge: Array<[number, number]> = [];
-  for (let i = 0; i <= n; i++) {
-    let x = (i / n) * 100;
-    if (i > 0 && i < n) x += (rnd() - 0.5) * 0.5;
-    y += (rnd() - 0.5) * 1.5; // slow wander = organic tear
-    y = Math.max(base - 2.4, Math.min(base + 2.4, y));
-    edge.push([x, y + (rnd() - 0.5) * 0.45]); // fine fibre-level jitter
-  }
-  const fiber = edge.map(([x, ey]): [number, number] => [x, ey + 0.55 + rnd() * 1.25]);
-
-  const top = ['0% 0%', '100% 0%'];
-  for (let a = edge.length - 1; a >= 0; a--) top.push(`${pct(edge[a][0])} ${pct(edge[a][1])}`);
-
-  const bottom = edge.map(([x, ey]) => `${pct(x)} ${pct(ey)}`);
-  bottom.push('100% 100%', '0% 100%');
-
-  const fib = edge.map(([x, ey]) => `${pct(x)} ${pct(ey)}`);
-  for (let b = fiber.length - 1; b >= 0; b--) fib.push(`${pct(fiber[b][0])} ${pct(fiber[b][1])}`);
-
-  hero.style.setProperty('--clip-top', `polygon(${top.join(',')})`);
-  hero.style.setProperty('--clip-bottom', `polygon(${bottom.join(',')})`);
-  hero.style.setProperty('--clip-fiber', `polygon(${fib.join(',')})`);
-}
 
 /** Torn divider between the hero and the About section. */
 function buildDivider() {
@@ -132,7 +102,6 @@ export default function IntroEngine() {
       timers.push(window.setTimeout(() => finish(), END_MS));
     };
 
-    buildTear(hero);
     buildDivider();
 
     // The inline script in <head> already decided: first visit and motion allowed.
@@ -174,30 +143,11 @@ export default function IntroEngine() {
       reveals.forEach((el) => el.classList.add('in'));
     }
 
-    // scroll-linked golden-hour light
-    let ticking = false;
-    const updateBeam = () => {
-      const v = Math.max(0, 1 - window.scrollY / (window.innerHeight * 2.4));
-      root.style.setProperty('--beam', v.toFixed(3));
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateBeam);
-      }
-    };
-    if (!reduceMotion) {
-      window.addEventListener('scroll', onScroll, { passive: true });
-      updateBeam();
-    }
-
     return () => {
       clearTimers();
       skip?.removeEventListener('click', onSkip);
       document.removeEventListener('keydown', onKey);
       window.removeEventListener('portfolio:replay', onReplay);
-      window.removeEventListener('scroll', onScroll);
       io?.disconnect();
     };
   }, []);

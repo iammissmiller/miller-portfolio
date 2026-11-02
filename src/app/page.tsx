@@ -14,7 +14,6 @@ export default function Page() {
       <a className="skip-link" href="#about">
         Skip to content
       </a>
-      <div className="sunbeam" aria-hidden="true" />
       <Nav />
       <main id="top">
         <Hero />

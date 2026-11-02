@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { site } from '@/data/site';
 import ReplayButton from './ReplayButton';
 
@@ -14,10 +13,6 @@ export default function Contact() {
 
   return (
     <section className="section contact" id="contact" aria-labelledby="contact-h">
-      <div className="contact-art" aria-hidden="true">
-        {/* decorative: the same illustration is described in About */}
-        <Image src="/assets/eyes-art.jpg" alt="" width={1672} height={941} sizes="100vw" />
-      </div>
       <div className="wrap">
         <p className="label reveal">
           <span>05</span> / Contact <i lang="hi">संपर्क</i>
