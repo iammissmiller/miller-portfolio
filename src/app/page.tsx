@@ -10,10 +10,22 @@ import ScrollCan from '@/components/ScrollCan';
 import Skills from '@/components/Skills';
 import Strip from '@/components/Strip';
 import Work from '@/components/Work';
+import { site } from '@/data/site';
+
+const personLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  ...(site.nameHindi ? { alternateName: site.nameHindi } : {}),
+  url: site.url,
+  description: site.description,
+  sameAs: [site.github, ...(site.linkedin ? [site.linkedin] : [])],
+}).replace(/</g, '\\u003c');
 
 export default function Page() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personLd }} />
       <a className="skip-link" href="#about">
         Skip to content
       </a>

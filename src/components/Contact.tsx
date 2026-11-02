@@ -28,7 +28,7 @@ export default function Contact() {
     { label: 'GitHub', href: site.github, text: site.github.replace('https://', ''), fallback: '', external: true },
     { label: 'LinkedIn', href: site.linkedin, text: site.linkedin?.replace('https://', ''), fallback: 'link to add', external: true },
     { label: 'Email', href: site.email ? `mailto:${site.email}` : undefined, text: site.email, fallback: 'address to add' },
-    { label: 'Resume', href: site.resume, text: 'Download PDF', fallback: 'PDF to add' },
+    { label: 'Resume', href: site.resume ?? '/resume', text: site.resume ? 'Download PDF' : 'View resume', fallback: '' },
   ];
 
   return (
