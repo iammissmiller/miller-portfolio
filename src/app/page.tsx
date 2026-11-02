@@ -1,11 +1,14 @@
 import About from '@/components/About';
+import CardTilt from '@/components/CardTilt';
 import Contact from '@/components/Contact';
 import Hero from '@/components/Hero';
 import HeroCursor from '@/components/HeroCursor';
 import IntroEngine from '@/components/IntroEngine';
 import Journey from '@/components/Journey';
 import Nav from '@/components/Nav';
+import ScrollCan from '@/components/ScrollCan';
 import Skills from '@/components/Skills';
+import Strip from '@/components/Strip';
 import Work from '@/components/Work';
 
 export default function Page() {
@@ -19,13 +22,19 @@ export default function Page() {
         <Hero />
         <div className="torn-divider" id="torn-divider" aria-hidden="true" />
         <About />
+        <Strip tone="red" words={[{ t: 'Selected work' }, { t: 'काम', hi: true }, { t: 'Rakta' }, { t: 'HackBIOS' }]} />
         <Work />
+        <Strip tone="sun" reverse words={[{ t: 'Skills' }, { t: 'हुनर', hi: true }, { t: 'Code' }, { t: 'Design' }]} />
         <Skills />
+        <Strip tone="ink" words={[{ t: 'Journey' }, { t: 'सफ़र', hi: true }, { t: 'Hackathons' }, { t: 'Open source' }]} />
         <Journey />
+        <Strip tone="red" reverse words={[{ t: 'Say hello' }, { t: 'संपर्क', hi: true }, { t: 'Say hello' }, { t: 'नमस्ते', hi: true }]} />
         <Contact />
       </main>
       <IntroEngine />
       <HeroCursor />
+      <CardTilt />
+      <ScrollCan />
     </>
   );
 }

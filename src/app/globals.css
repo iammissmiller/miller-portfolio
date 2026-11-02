@@ -369,8 +369,79 @@ a.disabled { pointer-events: none; }
 /* reveal on scroll (only when JS is running) */
 html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
 html.js .reveal.in { opacity: 1; transform: none; }
-html.js .label.reveal { transform: translateY(18px) rotate(-2deg); }
+/* section labels are slapped on like stickers */
+html.js .label.reveal { transform: rotate(-2deg) scale(1.7); transition: opacity .15s ease, transform .5s cubic-bezier(.2,1.6,.4,1); }
 html.js .label.reveal.in { transform: rotate(-2deg); }
+/* work posters and skill cards drop onto the page with a little overshoot */
+html.js .project.reveal { transform: translateY(46px) scale(1.05); transition: opacity .5s ease, transform .7s cubic-bezier(.2,1.3,.4,1), rotate .35s ease, translate .35s ease; }
+html.js .project.reveal.in { transform: none; }
+html.js .skill-wrap.reveal { transform: translateY(40px) scale(1.05);
+  transition: opacity .5s ease calc(var(--i, 0) * 90ms), transform .6s cubic-bezier(.2,1.4,.4,1) calc(var(--i, 0) * 90ms); }
+html.js .skill-wrap.reveal.in { transform: none; }
+
+/* marker highlight on the word that matters */
+.mk { background: linear-gradient(var(--sun), var(--sun)) 0 88% / 0% .42em no-repeat; color: inherit; padding: 0 .08em; transition: background-size .7s ease .55s; }
+.reveal.in .mk { background-size: 100% .42em; }
+.facts li { transition: padding-left .25s ease; }
+.facts li:hover { padding-left: 10px; }
+.facts li:hover b { background: var(--sun); box-shadow: 0 0 0 4px var(--sun); }
+
+/* cards that lean toward the pointer (CardTilt sets --rx / --ry) */
+.tilt { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .18s ease-out; will-change: transform; }
+
+/* work: posters taped to the carpet */
+.project { position: relative; rotate: -.8deg; }
+.project.flip { rotate: .9deg; }
+.project-row .project:nth-child(odd) { rotate: -1.2deg; }
+.project-row .project:nth-child(even) { rotate: 1deg; }
+.project:hover { rotate: 0deg; translate: 0 -6px; }
+.project-row .project:hover { rotate: 0deg; }
+.project::before { content: ""; position: absolute; z-index: 2; top: -15px; left: 50%; width: 112px; height: 30px; translate: -50% 0; rotate: -3deg;
+  background: rgba(244,177,28,.88); border: 2px solid rgba(42,15,10,.35); pointer-events: none; }
+.project.flip::before, .project-row .project:nth-child(even)::before { rotate: 4deg; }
+
+/* skills: a sheet of stickers */
+.skill-wrap { display: flex; }
+.skill-wrap .skill-card { flex: 1; }
+.chip { rotate: -2deg; transition: rotate .2s ease, translate .2s ease, scale .2s ease, background-color .2s ease; }
+.chip:nth-child(3n + 2) { rotate: 1.6deg; }
+.chip:nth-child(3n) { rotate: -.8deg; }
+.chip:hover { rotate: 0deg; translate: 0 -3px; scale: 1.1; background: var(--sun); }
+
+/* journey: the line draws itself and each pin pops in */
+.timeline { border-left: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--ink); transform-origin: top; transition: transform 1.6s cubic-bezier(.4,0,.2,1); }
+html.js .timeline.draw::before { transform: scaleY(0); }
+html.js .timeline.draw.in::before { transform: scaleY(1); }
+.timeline li::before { transition: scale .45s cubic-bezier(.2,1.8,.4,1) .35s; }
+html.js .timeline li.reveal:not(.in)::before { scale: 0; }
+.timeline .when { font: 800 clamp(22px, 2.8vw, 34px)/1 var(--display); letter-spacing: -.01em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1.5px var(--ink); padding-top: 0; }
+
+/* contact: letters hop when the pointer touches them */
+.contact-h .word { display: inline-block; white-space: nowrap; }
+.contact-h .w { display: inline-block; }
+.contact-h .w:hover { animation: hop .55s ease; }
+@keyframes hop { 0%, 100% { translate: 0 0; rotate: 0deg; } 30% { translate: 0 -.14em; rotate: -7deg; } 65% { translate: 0 .04em; rotate: 4deg; } }
+
+/* marquee bands between the sections */
+.strip { position: relative; z-index: 2; overflow: hidden; border-block: 3px solid var(--ink); white-space: nowrap; padding: .5em 0;
+  font: 800 clamp(20px, 2.6vw, 34px)/1 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
+.strip.sun { background: var(--sun); color: var(--ink); }
+.strip.red { background: var(--red); color: var(--cream); }
+.strip.teal { background: var(--teal); color: var(--cream); }
+.strip.ink { background: var(--ink); color: var(--sun); }
+.strip-track { display: flex; width: max-content; animation: bigdrift 30s linear infinite; will-change: transform; }
+.strip.rev .strip-track { animation-direction: reverse; }
+.strip-set { display: flex; gap: 1.2em; padding-right: 1.2em; }
+.strip .hi { font-family: var(--hindi); font-weight: 400; text-transform: none; }
+.strip b { margin-left: 1.2em; font-weight: 400; opacity: .9; }
+
+/* a small can rides down the right edge as you scroll (ScrollCan) */
+.scrollcan { position: fixed; right: 12px; top: 78px; z-index: 30; pointer-events: none; will-change: transform; display: none; }
+.scrollcan img { display: block; height: 46px; width: auto;
+  filter: drop-shadow(2px 0 0 #f6e7c8) drop-shadow(-2px 0 0 #f6e7c8) drop-shadow(0 2px 0 #f6e7c8) drop-shadow(0 -2px 0 #f6e7c8) drop-shadow(3px 5px 4px rgba(20,4,0,.5)); }
+@media (min-width: 1280px) { .scrollcan { display: block; } }
+html.playing .scrollcan { display: none; }
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 900px) {
@@ -405,6 +476,10 @@ html.js .label.reveal.in { transform: rotate(-2deg); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  html.js .reveal { opacity: 1; transform: none; }
+  html.js .reveal, html.js .project.reveal, html.js .skill-wrap.reveal { opacity: 1; transform: none; }
   html.js .label.reveal { transform: rotate(-2deg); }
+  html.js .timeline.draw::before { transform: none; }
+  html.js .timeline li.reveal:not(.in)::before { scale: 1; }
+  .mk { background-size: 100% .42em; }
+  .scrollcan { display: none; }
 }

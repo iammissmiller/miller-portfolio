@@ -9,7 +9,7 @@ export default function About() {
         </p>
         <div className="about-body reveal">
           <h2 id="about-h" className="h-display">
-            Nice to meet you.
+            Nice to meet <mark className="mk">you.</mark>
           </h2>
           <p className={about.lede ? 'lede' : 'lede ph'}>
             {about.lede ??

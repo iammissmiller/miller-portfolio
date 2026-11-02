@@ -1,6 +1,26 @@
 import { site } from '@/data/site';
 import ReplayButton from './ReplayButton';
 
+/** Splits text into hoverable letters; each word stays together so lines never break mid-word. */
+function Wobble({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(' ').map((word, wi) => (
+        <span key={wi} aria-hidden="true">
+          {wi > 0 ? ' ' : null}
+          <span className="word">
+            {word.split('').map((c, ci) => (
+              <span key={ci} className="w">
+                {c}
+              </span>
+            ))}
+          </span>
+        </span>
+      ))}
+    </>
+  );
+}
+
 type Item = { label: string; href?: string; text?: string; fallback: string; external?: boolean };
 
 export default function Contact() {
@@ -17,10 +37,10 @@ export default function Contact() {
         <p className="label reveal">
           <span>05</span> / Contact <i lang="hi">संपर्क</i>
         </p>
-        <h2 id="contact-h" className="contact-h reveal">
-          Let&apos;s make
+        <h2 id="contact-h" className="contact-h reveal" aria-label="Let's make something warm.">
+          <Wobble text="Let's make" />
           <br />
-          something warm.
+          <Wobble text="something warm." />
         </h2>
         <ul className="contact-links reveal">
           {items.map((it) => (

@@ -35,7 +35,7 @@ function Card({ p, flip }: { p: Project; flip: boolean }) {
   const feature = p.size === 'feature';
   return (
     <article className={`project${feature ? '' : ' mini'}${flip ? ' flip' : ''} reveal`}>
-      <div className={`project-visual ${p.visual}`} role="img" aria-label={`Visual placeholder for ${p.title}`}>
+      <div className={`project-visual tilt ${p.visual}`} role="img" aria-label={`Visual placeholder for ${p.title}`}>
         <span className="pv-index">{p.index}</span>
         <span className="pv-title">{p.title}</span>
         <span className="pv-note">{feature ? 'screenshot goes here' : 'visual goes here'}</span>

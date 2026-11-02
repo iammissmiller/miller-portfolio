@@ -12,7 +12,7 @@ export default function Journey() {
             Hackathons, contributions &amp; more.
           </h2>
         </div>
-        <ol className="timeline">
+        <ol className="timeline draw">
           {journey.map((j, i) => (
             <li className="reveal" key={i}>
               <span className={`mono when${j.when ? '' : ' ph'}`}>{j.when ?? 'Year — to add'}</span>

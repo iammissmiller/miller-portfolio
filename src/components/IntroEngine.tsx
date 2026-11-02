@@ -124,7 +124,7 @@ export default function IntroEngine() {
 
 
     // reveal on scroll
-    const reveals = document.querySelectorAll<HTMLElement>('.reveal');
+    const reveals = document.querySelectorAll<HTMLElement>('.reveal, .draw');
     let io: IntersectionObserver | undefined;
     if ('IntersectionObserver' in window) {
       io = new IntersectionObserver(

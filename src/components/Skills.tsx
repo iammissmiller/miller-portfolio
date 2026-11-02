@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { skillGroups } from '@/data/site';
 
 export default function Skills() {
@@ -13,22 +14,24 @@ export default function Skills() {
           </h2>
         </div>
         <div className="skill-grid">
-          {skillGroups.map((g) => (
-            <div className="skill-card reveal" key={g.title}>
-              <h3 className="mono">{g.title}</h3>
-              <ul>
-                {g.skills.length > 0
-                  ? g.skills.map((s) => (
-                      <li className="chip" key={s}>
-                        {s}
-                      </li>
-                    ))
-                  : [0, 1].map((n) => (
-                      <li className="chip ph" key={n}>
-                        add verified skill
-                      </li>
-                    ))}
-              </ul>
+          {skillGroups.map((g, gi) => (
+            <div className="skill-wrap reveal" key={g.title} style={{ '--i': gi } as CSSProperties}>
+              <div className="skill-card tilt">
+                <h3 className="mono">{g.title}</h3>
+                <ul>
+                  {g.skills.length > 0
+                    ? g.skills.map((s) => (
+                        <li className="chip" key={s}>
+                          {s}
+                        </li>
+                      ))
+                    : [0, 1].map((n) => (
+                        <li className="chip ph" key={n}>
+                          add verified skill
+                        </li>
+                      ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
