@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { play, setEnabled, unlock } from '@/lib/sfx';
+import { play, setEnabled, startAmbient, stopAmbient, suspendAudio, unlock } from '@/lib/sfx';
 
 type Props = {
   name: string;
@@ -43,7 +43,7 @@ export default function SoundGate({ name, nameHindi, year, music, copy }: Props)
   };
 
   const startMusic = () => {
-    if (!music) return;
+    if (!music) return startAmbient(); // no track supplied: use the generated background loop
     let a = audio.current;
     if (!a) {
       a = new Audio(music);
@@ -67,6 +67,7 @@ export default function SoundGate({ name, nameHindi, year, music, copy }: Props)
       unlock();
       startMusic();
     } else {
+      stopAmbient();
       fadeTo(0, () => audio.current?.pause());
     }
   };
@@ -85,47 +86,34 @@ export default function SoundGate({ name, nameHindi, year, music, copy }: Props)
       if (!onRef.current) return;
       const cls = (e as CustomEvent<string>).detail;
       if (cls === 'p-hit') {
+        // a soft tap for every other sticker, so it stays light
         document.querySelectorAll<HTMLElement>('.fs').forEach((el, i) => {
+          if (i % 2) return;
           const d = parseFloat(el.style.getPropertyValue('--d')) || 0;
           play('pop', i, d);
         });
       } else if (cls === 'p-clear') play('whoosh');
       else if (cls === 'p-poster' || cls === 'p-figure') play('slap');
       else if (cls === 'p-name') play('stab');
-      else if (cls === 'p-stk') [0, 0.11, 0.22].forEach((d, i) => play('pop', i + 3, d));
+      else if (cls === 'p-stk') play('pop', 2);
       else if (cls === 'p-id') play('chime');
     };
     window.addEventListener('portfolio:sfx', onSfx);
 
-    // small UI sounds (mouse only for hover; clicks for everything)
-    let lastEl: Element | null = null;
-    let lastAt = 0;
-    const SEL = 'a, button, .chip, .project';
-    const onOver = (e: PointerEvent) => {
-      if (!onRef.current || e.pointerType !== 'mouse') return;
-      const el = (e.target as Element).closest?.(SEL);
-      const now = performance.now();
-      if (!el || el === lastEl || now - lastAt < 70 || el.closest('.gate')) return;
-      lastEl = el;
-      lastAt = now;
-      play('tick');
-    };
-    const onOut = () => {
-      lastEl = null;
-    };
+    // a soft click on buttons and links (no hover sounds)
     const onDown = (e: PointerEvent) => {
       if (!onRef.current) return;
       const el = (e.target as Element).closest?.('a, button');
       if (el && !el.closest('.gate')) play('click');
     };
-    document.addEventListener('pointerover', onOver);
-    document.addEventListener('pointerout', onOut);
     document.addEventListener('pointerdown', onDown);
 
     // pause the music while the tab is hidden
     const onVis = () => {
+      if (!onRef.current) return;
+      suspendAudio(document.hidden);
       const a = audio.current;
-      if (!a || !onRef.current) return;
+      if (!a) return;
       if (document.hidden) a.pause();
       else a.play().catch(() => {});
     };
@@ -133,8 +121,6 @@ export default function SoundGate({ name, nameHindi, year, music, copy }: Props)
 
     return () => {
       window.removeEventListener('portfolio:sfx', onSfx);
-      document.removeEventListener('pointerover', onOver);
-      document.removeEventListener('pointerout', onOut);
       document.removeEventListener('pointerdown', onDown);
       document.removeEventListener('visibilitychange', onVis);
       window.clearInterval(fader.current);
