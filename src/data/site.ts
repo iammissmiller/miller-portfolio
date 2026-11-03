@@ -15,6 +15,13 @@ export const site = {
   tagline: 'Golden hour, in code.',
   description:
     'Computer science student who designs and builds interfaces directly in code: visual identity, interaction and responsive layout.',
+  // Words on the Enter screen. Edit freely.
+  gate: {
+    line: 'Golden hour, in code.',
+    loud: 'Turn it up ♪',
+    quiet: 'Shh, just show me',
+    note: 'Best with sound. Headphones help.',
+  },
   github: 'https://github.com/iammissmiller',
   linkedin: 'https://linkedin.com/in/praptee-miller-896a50323' as string | undefined,
   email: 'millerpraptee@gmail.com' as string | undefined,

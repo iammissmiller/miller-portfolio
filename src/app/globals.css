@@ -95,16 +95,6 @@ html.playing:not(.p-id) .nav { opacity: 0; transform: translateY(-100%); visibil
   overflow: hidden; background: #7a1f16; isolation: isolate; z-index: 0;
 }
 
-.skip-intro {
-  display: none; position: absolute; right: var(--gut); bottom: var(--gut); z-index: 30;
-  align-items: center; gap: .6em;
-  background: var(--sun); color: var(--ink);
-  border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); padding: .6em 1.1em;
-  font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase;
-}
-html.playing .skip-intro { display: inline-flex; }
-.skip-intro:hover { background: var(--cream); }
-
 /* ---- Layer 1: under the paper ---- */
 .under { position: absolute; inset: 0; z-index: 1; }
 .carpet { position: absolute; inset: 0; background: var(--carpet) center / cover; }
@@ -536,7 +526,7 @@ html.playing .scrollcan { display: none; }
 @media print {
   @page { margin: 14mm; }
   body { background: #fff; }
-  .screen-only, .nav, .skip-link, .cursor-ring, .scrollcan { display: none !important; }
+  .screen-only, .nav, .skip-link, .cursor-ring, .scrollcan, .sound-toggle, .gate { display: none !important; }
   .resume-page { padding: 0; background: #fff; min-height: 0; }
   .resume { max-width: none; padding: 0; border: 0; box-shadow: none; font-size: 11.5pt; }
   .resume a { text-decoration: none; }
@@ -551,3 +541,35 @@ html.playing .scrollcan { display: none; }
   .case-next { flex-direction: column; }
   .resume-bar .btn { flex: 1 1 auto; text-align: center; }
 }
+
+/* ---------- Enter screen + sound sticker ---------- */
+.gate {
+  position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 24px;
+  background: linear-gradient(rgba(122,31,22,.8), rgba(90,18,12,.92)), url('/assets/carpet.jpg') center / cover;
+  visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .45s ease, visibility 0s .45s;
+}
+html.gated .gate { visibility: visible; opacity: 1; pointer-events: auto; transition: none; }
+.gate-card {
+  width: min(560px, 100%); padding: clamp(26px, 6vw, 52px); text-align: center; rotate: -1.5deg;
+  background: url('/assets/paper.jpg') center / cover, var(--red); color: var(--cream);
+  border: 3px solid var(--ink); box-shadow: 0 0 0 6px var(--cream), 10px 12px 0 6px var(--ink);
+}
+.gate-name { font: 800 clamp(48px, 13vw, 96px)/.88 var(--display); text-transform: uppercase; letter-spacing: -.03em; color: var(--sun); text-shadow: 4px 4px 0 var(--ink); margin: .3em 0 .15em; }
+.gate-hi { font: clamp(22px, 4vw, 30px)/1.2 var(--hindi); }
+.gate-line { margin-top: .9rem; font: 800 clamp(20px, 3.6vw, 28px)/1.1 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
+.gate-actions { display: grid; gap: .8rem; margin-top: 1.4rem; }
+.gate .btn { padding: 1em 1.4em; font-size: 13px; color: var(--ink); cursor: pointer; }
+.gate .btn.quiet { background: var(--cream); }
+.gate .btn.quiet:hover { background: var(--sun); }
+.gate-note { margin-top: 1.1rem; font-size: 11px; opacity: .8; text-transform: none; letter-spacing: .04em; }
+
+.sound-toggle {
+  position: fixed; left: 14px; bottom: 14px; z-index: 60; cursor: pointer;
+  background: var(--sun); color: var(--ink); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+  padding: .55em 1em; font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  transition: transform .15s, background .2s;
+}
+.sound-toggle:hover { background: var(--cream); transform: translate(-1px, -1px); }
+.sound-toggle[aria-pressed='false'] { background: var(--cream); }
+html.playing .sound-toggle { display: none; }
+@media (hover: none) { .sound-toggle { padding: .7em 1.1em; } }

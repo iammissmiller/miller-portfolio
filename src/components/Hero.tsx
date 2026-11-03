@@ -35,10 +35,6 @@ export default function Hero() {
   ];
   return (
     <section className="hero" id="hero" aria-labelledby="name" style={style({ '--len': String(site.name.trim().length) })}>
-      <button className="skip-intro" id="skip-intro" type="button">
-        Skip intro <span aria-hidden="true">→</span>
-      </button>
-
       {/* Layer 1: what lies UNDER the paper. Carpet of arches, a red poster, the figure breaking out of it. */}
       <div className="under">
         <div className="carpet" aria-hidden="true" />

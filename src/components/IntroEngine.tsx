@@ -6,7 +6,7 @@ import { useEffect } from 'react';
  * Behaviour layer. Renders nothing. It:
  *  1. builds the torn divider under the hero
  *  2. runs the opening sequence by adding classes to <html>; the CSS does the animating
- *  3. handles Skip, Esc, Replay, first-visit-only and reduced motion
+ *  3. waits for the Enter screen (SoundGate), then plays; handles Replay and reduced motion
  *  4. reveals sections as you scroll
  *
  * The page content is plain server-rendered HTML, so everything still works without this.
@@ -78,17 +78,10 @@ export default function IntroEngine() {
       }
     };
 
-    const finish = (focusName = false) => {
+    const finish = () => {
       clearTimers();
       ALL.forEach((c) => root.classList.remove(c));
       markSeen();
-      if (focusName) {
-        const h = document.getElementById('name');
-        if (h) {
-          h.setAttribute('tabindex', '-1');
-          h.focus({ preventScroll: true });
-        }
-      }
     };
 
     const play = () => {
@@ -97,24 +90,25 @@ export default function IntroEngine() {
       root.classList.add('playing');
       void hero.offsetWidth; // restart CSS animations cleanly
       STEPS.forEach(([cls, ms]) => {
-        timers.push(window.setTimeout(() => root.classList.add(cls), ms));
+        timers.push(
+          window.setTimeout(() => {
+            root.classList.add(cls);
+            window.dispatchEvent(new CustomEvent('portfolio:sfx', { detail: cls })); // SoundGate plays the matching sound
+          }, ms),
+        );
       });
       timers.push(window.setTimeout(() => finish(), END_MS));
     };
 
     buildDivider();
 
-    // The inline script in <head> already decided: first visit and motion allowed.
-    if (root.classList.contains('playing')) play();
-
-    const skip = document.getElementById('skip-intro');
-    const onSkip = () => finish(true);
-    skip?.addEventListener('click', onSkip);
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && root.classList.contains('playing')) finish(true);
-    };
-    document.addEventListener('keydown', onKey);
+    // The inline script in <head> already decided: motion allowed, home page.
+    // It also set `gated`: the Enter screen is up, so wait for the visitor's click.
+    const onEnter = () => play();
+    if (root.classList.contains('playing')) {
+      if (root.classList.contains('gated')) window.addEventListener('portfolio:enter', onEnter, { once: true });
+      else play();
+    }
 
     const onReplay = () => {
       window.scrollTo(0, 0);
@@ -145,8 +139,7 @@ export default function IntroEngine() {
 
     return () => {
       clearTimers();
-      skip?.removeEventListener('click', onSkip);
-      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('portfolio:enter', onEnter);
       window.removeEventListener('portfolio:replay', onReplay);
       io?.disconnect();
     };

@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque, DM_Mono, Manrope, Rozha_One } from 'next/font/google';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import SoundGate from '@/components/SoundGate';
 import { site } from '@/data/site';
 import './globals.css';
 
@@ -10,6 +13,11 @@ const body = Manrope({ subsets: ['latin'], variable: '--font-body', display: 'sw
 const mono = DM_Mono({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
 const title = `${site.name} — Portfolio`;
+
+/** Background music: put a track at public/audio/theme.mp3 (or .m4a / .ogg). Without one, only the sound effects play. */
+const music = ['mp3', 'm4a', 'ogg']
+  .map((ext) => `/audio/theme.${ext}`)
+  .find((src) => existsSync(join(process.cwd(), 'public', src)));
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -35,6 +43,7 @@ export const viewport: Viewport = {
  * Runs before first paint. Decides whether the opening sequence plays:
  *   - not when the visitor prefers reduced motion
  *   - only on the home page (other pages have no intro)
+ *   - waits behind the Enter screen (`gated`) until the visitor clicks
  *   - otherwise it plays on every visit and every reload
  * Without JavaScript the page simply shows its final state.
  */
@@ -43,8 +52,9 @@ const introScript = `
   var root = document.documentElement;
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduced && location.pathname === '/') {  // only the home page has an intro
-    root.classList.add('playing');
-    setTimeout(function () { root.classList.remove('playing'); }, 9000); // safety net
+    root.classList.add('playing', 'gated');
+    // safety net: if the page's scripts never start, do not leave the visitor stuck behind the Enter screen
+    setTimeout(function () { if (!root.classList.contains('js')) root.classList.remove('playing', 'gated'); }, 8000);
   }
 })();
 `;
@@ -59,7 +69,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: introScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SoundGate name={site.name} nameHindi={site.nameHindi} year={site.year} music={music} copy={site.gate} />
+      </body>
     </html>
   );
 }
