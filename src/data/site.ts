@@ -79,9 +79,9 @@ export type JourneyItem = { when?: string; title?: string; detail?: string };
 export const journey: JourneyItem[] = [
   { when: '2026', title: 'GSSoC 2026: open source', detail: 'Fixed accessibility issues in story-spark-ai; merged 40+ PRs in EaseMotion CSS (animation utilities, landing pages, dashboard components); implemented Issue #5886 (Minimal Compact View mode) in CommitPulse.' },
   { when: '2026', title: 'Smart India Hackathon: selected at college level', detail: 'Co-built S.A.M.U.D.R.A, an explainable 7-stage oil spill investigation dashboard.' },
-  { title: 'Technical Team Co-Lead, HackBios', detail: 'Co-led the technical team and built the frontend of the official site for a hackathon with 300+ participants across 70+ teams; also on the organizing team alongside 50+ volunteers.' },
-  { title: 'TechSprint (GDG SSTC Bhilai): 2nd Runner-Up', detail: "Haven & Her, a women's health awareness platform." },
-  { title: 'Hax Baby hackathon: 13th place', detail: 'Built Yumemi, a character-led interactive storytelling portfolio.' },
-  { title: 'GDG Last Quest: 4th place', detail: 'Built BreatheSafe, an AI-powered respiratory health platform.' },
-  { title: 'Tech Team Member, GeeksforGeeks (GFG) Campus Club' },
+  { when: '2026', title: 'Technical Team Co-Lead, HackBios', detail: 'Co-led the technical team and built the frontend of the official site for a hackathon with 300+ participants across 70+ teams; also on the organizing team alongside 50+ volunteers.' },
+  { when: '2026', title: 'TechSprint (GDG SSTC Bhilai): 2nd Runner-Up', detail: "Haven & Her, a women's health awareness platform." },
+  { when: '2026', title: 'Hax Baby hackathon: 13th place', detail: 'Built Yumemi, a character-led interactive storytelling portfolio.' },
+  { when: '2026', title: 'GDG Last Quest: 4th place', detail: 'Built BreatheSafe, an AI-powered respiratory health platform.' },
+  { when: '2025', title: 'Tech Team Member, GeeksforGeeks (GFG) Campus Club' },
 ];
