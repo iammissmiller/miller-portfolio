@@ -54,12 +54,12 @@ export type Project = {
 // Longer write-ups live in content/projects/<slug>.md (see content/projects/_guide.md).
 
 export const projects: Project[] = [
-  { index: '01', title: 'Rakta', visual: 'v1', size: 'feature' },
-  { index: '02', title: 'HackBIOS', visual: 'v2', size: 'feature' },
+  { index: '01', title: 'HackBIOS', visual: 'v2', size: 'feature' },
+  { index: '02', title: 'Haven & Her', visual: 'v4', size: 'feature' },
   { index: '03', title: 'Yumemi', visual: 'v3', size: 'mini' },
-  { index: '04', title: 'Haven & Her', visual: 'v4', size: 'mini' },
-  { index: '05', title: 'S.A.M.U.D.R.A', visual: 'v2', size: 'mini' },
-  { index: '06', title: 'BreatheSafe', visual: 'v1', size: 'mini' },
+  { index: '04', title: 'S.A.M.U.D.R.A', visual: 'v2', size: 'mini' },
+  { index: '05', title: 'BreatheSafe', visual: 'v1', size: 'mini' },
+  { index: '06', title: 'Rakta', visual: 'v1', size: 'mini' },
 ];
 // The details of each project live in content/projects/<slug>.md.
 
@@ -79,7 +79,9 @@ export type JourneyItem = { when?: string; title?: string; detail?: string };
 export const journey: JourneyItem[] = [
   { when: '2026', title: 'GSSoC 2026: open source', detail: 'Fixed accessibility issues in story-spark-ai; merged 40+ PRs in EaseMotion CSS (animation utilities, landing pages, dashboard components); implemented Issue #5886 (Minimal Compact View mode) in CommitPulse.' },
   { when: '2026', title: 'Smart India Hackathon: selected at college level', detail: 'Co-built S.A.M.U.D.R.A, an explainable 7-stage oil spill investigation dashboard.' },
+  { title: 'Technical Team Co-Lead, HackBios', detail: 'Co-led the technical team and built the frontend of the official site for a hackathon with 300+ participants across 70+ teams; also on the organizing team alongside 50+ volunteers.' },
   { title: 'TechSprint (GDG SSTC Bhilai): 2nd Runner-Up', detail: "Haven & Her, a women's health awareness platform." },
-  { title: 'Organizing & Management Team, HackBios', detail: 'Served on the organizing team alongside 50+ volunteers for a hackathon with 300+ participants across 70+ teams.' },
+  { title: 'Hax Baby hackathon: 13th place', detail: 'Built Yumemi, a character-led interactive storytelling portfolio.' },
+  { title: 'GDG Last Quest: 4th place', detail: 'Built BreatheSafe, an AI-powered respiratory health platform.' },
   { title: 'Tech Team Member, GeeksforGeeks (GFG) Campus Club' },
 ];

@@ -34,7 +34,7 @@ export default function Page() {
         <Hero />
         <div className="torn-divider" id="torn-divider" aria-hidden="true" />
         <About />
-        <Strip tone="red" words={[{ t: 'Selected work' }, { t: 'काम', hi: true }, { t: 'Rakta' }, { t: 'HackBIOS' }]} />
+        <Strip tone="red" words={[{ t: 'Selected work' }, { t: 'काम', hi: true }, { t: 'HackBIOS' }, { t: 'Haven & Her' }]} />
         <Work />
         <Strip tone="sun" reverse words={[{ t: 'Skills' }, { t: 'हुनर', hi: true }, { t: 'Code' }, { t: 'Design' }]} />
         <Skills />

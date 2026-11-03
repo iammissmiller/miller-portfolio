@@ -1,6 +1,6 @@
 ---
-summary: A diary-style menstrual health app for Indian women: not an app, a diary.
-status: Live
+summary: A diary-style menstrual health app for Indian women: not an app, a diary. Still in active development.
+status: In development · actively being built
 year: 
 role: Designed and built
 stack: Next.js, TypeScript, Tailwind CSS, PostgreSQL, Prisma, Docker, GitHub Actions
@@ -13,6 +13,7 @@ tags: Next.js, TypeScript, Tailwind CSS, PostgreSQL, Prisma, Docker, GitHub Acti
 
 ## What I did
 
+- Ongoing project: still being actively built, so some features are unfinished.
 - Designed and built a diary-style menstrual health app for Indian women around the idea “not an app, a diary”, with a warm, private, no-feed interface.
 - Created an at-a-glance dashboard: a cycle ring showing the current phase, day count and next expected date, with one-tap mood and flow logging.
 - Designed the Saheli companion experience, a bilingual Hindi/English space for questions on PCOS, cramps and mood, in a judgment-free tone.

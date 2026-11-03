@@ -1,10 +1,6 @@
 import Link from 'next/link';
 import { getProjects, hasCaseStudy, type CaseProject } from '@/lib/projects';
 
-function Pending({ value, fallback }: { value?: string; fallback: string }) {
-  return value ? <>{value}</> : <span className="ph">{fallback}</span>;
-}
-
 function Links({ p }: { p: CaseProject }) {
   const hasAny = Boolean(p.live || p.source);
   return (
@@ -61,30 +57,19 @@ function Card({ p, flip }: { p: CaseProject; flip: boolean }) {
         </p>
         {feature ? (
           <dl>
-            <div>
-              <dt>Problem</dt>
-              <dd>
-                <Pending value={p.problem} fallback="To be added" />
-              </dd>
-            </div>
-            <div>
-              <dt>My role</dt>
-              <dd>
-                <Pending value={p.role} fallback="To be added" />
-              </dd>
-            </div>
-            <div>
-              <dt>Stack</dt>
-              <dd>
-                <Pending value={p.stack} fallback="To be verified" />
-              </dd>
-            </div>
-            <div>
-              <dt>Key decisions</dt>
-              <dd>
-                <Pending value={p.decisions} fallback="To be added" />
-              </dd>
-            </div>
+            {([
+              ['Problem', p.problem],
+              ['My role', p.role],
+              ['Stack', p.stack],
+              ['Key decisions', p.decisions],
+            ] as const).map(([label, value]) =>
+              value ? (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ) : null,
+            )}
           </dl>
         ) : null}
         <Links p={p} />
