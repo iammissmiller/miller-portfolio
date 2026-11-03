@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { site } from '@/data/site';
 
 const links = [
@@ -15,6 +15,14 @@ const links = [
 /** `base` is '' on the home page and '/' on other pages, so the links always land on the home sections. */
 export default function Nav({ base = '' }: { base?: string }) {
   const [open, setOpen] = useState(false);
+
+  // Escape closes the mobile menu
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
     <header className="nav" id="nav">

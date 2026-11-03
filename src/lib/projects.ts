@@ -8,7 +8,7 @@ import { projects as base, type Project } from '@/data/site';
  *  - content/projects/<slug>.md : the full write-up (frontmatter fields + a markdown story)
  * Anything written in the markdown file wins over site.ts. Nothing here invents content.
  */
-export type CaseProject = Project & { slug: string; body?: string };
+export type CaseProject = Project & { slug: string; body?: string; image?: string };
 
 export const slugOf = (title: string) =>
   title
@@ -40,14 +40,24 @@ function parse(raw: string): { data: Record<string, string>; body: string } {
   return { data, body: text.slice(end + 4).replace(/^\n/, '').trim() };
 }
 
+/** A screenshot dropped at public/projects/<slug>.png (or .jpg / .jpeg / .webp) is picked up automatically. */
+function findImage(slug: string): string | undefined {
+  for (const ext of ['webp', 'png', 'jpg', 'jpeg']) {
+    if (existsSync(join(process.cwd(), 'public', 'projects', `${slug}.${ext}`))) return `/projects/${slug}.${ext}`;
+  }
+  return undefined;
+}
+
 function load(p: Project): CaseProject {
   const slug = slugOf(p.title);
+  const image = findImage(slug);
   const file = join(process.cwd(), 'content', 'projects', `${slug}.md`);
-  if (!existsSync(file)) return { ...p, slug };
+  if (!existsSync(file)) return { ...p, slug, image };
   const { data, body } = parse(readFileSync(file, 'utf8'));
   return {
     ...p,
     slug,
+    image,
     body: body || undefined,
     summary: data.summary ?? p.summary,
     status: data.status ?? p.status,

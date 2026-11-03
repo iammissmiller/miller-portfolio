@@ -41,11 +41,18 @@ function Card({ p, flip }: { p: CaseProject; flip: boolean }) {
   const feature = p.size === 'feature';
   return (
     <article className={`project${feature ? '' : ' mini'}${flip ? ' flip' : ''} reveal`}>
-      <div className={`project-visual tilt ${p.visual}`} role="img" aria-label={`Visual placeholder for ${p.title}`}>
-        <span className="pv-index">{p.index}</span>
-        <span className="pv-title">{p.title}</span>
-        <span className="pv-note">{feature ? 'screenshot goes here' : 'visual goes here'}</span>
-      </div>
+      {p.image ? (
+        <div className={`project-visual tilt has-img ${p.visual}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={p.image} alt={`Screenshot of ${p.title}`} loading="lazy" decoding="async" />
+          <span className="pv-index">{p.index}</span>
+        </div>
+      ) : (
+        <div className={`project-visual tilt ${p.visual}`} role="img" aria-label={p.title}>
+          <span className="pv-index">{p.index}</span>
+          <span className="pv-title">{p.title}</span>
+        </div>
+      )}
       <div className="project-body">
         <p className="mono tag">{p.status ?? 'Status to confirm'}</p>
         <h3>{p.title}</h3>

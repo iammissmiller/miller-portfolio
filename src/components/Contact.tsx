@@ -48,7 +48,7 @@ export default function Contact() {
               {it.href ? (
                 <a href={it.href} {...(it.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
                   <span className="mono">{it.label}</span>
-                  {it.text} {it.external ? '↗' : ''}
+                  {it.external ? `${it.text} ↗` : it.text}
                 </a>
               ) : (
                 <a className="disabled" aria-disabled="true">

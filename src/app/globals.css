@@ -305,6 +305,10 @@ html.playing:not(.p-stk) .sticker, html.playing:not(.p-stk) .caps { opacity: 0; 
 .project-visual::after { content: ""; position: absolute; inset: 0; background: var(--grain); opacity: .22; pointer-events: none; }
 .pv-index { font: 500 12px var(--mono); letter-spacing: .14em; position: relative; z-index: 1; }
 .pv-title { font: 800 clamp(38px, 5.4vw, 74px)/.92 var(--display); letter-spacing: -.04em; text-transform: uppercase; position: relative; z-index: 1; text-shadow: 3px 3px 0 var(--ink); }
+.project-visual.has-img { padding: 0; }
+.project-visual.has-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.project-visual.has-img .pv-index { position: absolute; left: 12px; top: 10px; z-index: 2; background: var(--cream); color: var(--ink); border: 2px solid var(--ink); padding: .1em .55em; }
+.project-visual.has-img::before, .project-visual.has-img::after { display: none; }
 .pv-note { position: absolute; z-index: 1; right: clamp(14px, 2.2vw, 26px); top: clamp(14px, 2.2vw, 26px); font: 400 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; opacity: .9; }
 .v1 { color: var(--cream); background: radial-gradient(90% 100% at 20% 15%, #e0622a, #c4381a 60%, #8e2417); }
 .v1 .pv-title { color: var(--sun); }
@@ -333,7 +337,7 @@ a.disabled { pointer-events: none; }
 /* skills: teal poster with a fine diamond lattice */
 .skills { background: var(--grain), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 0 L28 14 L14 28 L0 14Z' fill='none' stroke='%23f6e7c8' stroke-opacity='.13'/%3E%3C/svg%3E"), var(--teal); }
 .skills .h-display { color: var(--cream); }
-.skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: clamp(32px, 5vw, 56px); }
+.skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: clamp(32px, 5vw, 56px); }
 .skill-card { padding: 22px; background: var(--cream); border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
 .skill-card h3 { color: var(--red); margin-bottom: 14px; font-weight: 500; }
 .chip { display: inline-block; padding: .35em .85em; margin: 0 .4rem .5rem 0; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--cream-2); font: 500 12px var(--mono); }
@@ -536,4 +540,14 @@ html.playing .scrollcan { display: none; }
   .resume-page { padding: 0; background: #fff; min-height: 0; }
   .resume { max-width: none; padding: 0; border: 0; box-shadow: none; font-size: 11.5pt; }
   .resume a { text-decoration: none; }
+}
+
+.case-shot { display: block; width: 100%; height: auto; margin: 0 0 1.8rem; border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); background: var(--cream-2); }
+.nf { min-height: 100svh; display: grid; align-content: center; justify-items: start; gap: 1rem; padding: 96px var(--gut) 48px; background: var(--red); color: var(--cream); }
+.nf h1 { font: 800 clamp(80px, 22vw, 260px)/.85 var(--display); color: var(--sun); text-shadow: 6px 6px 0 var(--ink); letter-spacing: -.04em; }
+.nf p { max-width: 36ch; font-size: clamp(18px, 2vw, 22px); }
+@media (max-width: 640px) {
+  .case-meta { grid-template-columns: 1fr 1fr; }
+  .case-next { flex-direction: column; }
+  .resume-bar .btn { flex: 1 1 auto; text-align: center; }
 }

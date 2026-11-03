@@ -37,6 +37,9 @@ export default async function CaseStudy({ params }: Params) {
 
   return (
     <>
+      <a className="skip-link" href="#content">
+        Skip to content
+      </a>
       <Nav base="/" />
       <main id="top" className="case">
         <header className={`case-hero ${p.visual}`}>
@@ -49,7 +52,11 @@ export default async function CaseStudy({ params }: Params) {
           </div>
         </header>
 
-        <div className="wrap case-wrap">
+        <div className="wrap case-wrap" id="content">
+          {p.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="case-shot" src={p.image} alt={`Screenshot of ${p.title}`} decoding="async" />
+          ) : null}
           <dl className="case-meta">
             <div>
               <dt>Status</dt>
